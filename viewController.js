@@ -1,4 +1,4 @@
-console.log("Hi im there");
+console.log("retrieving data from API");
 
 var mountDiv = document.getElementById("resultsText");
 mountDiv.innerText = "Loading data...";
@@ -12,15 +12,21 @@ fetch("/startApi").then(function(response) {
 .then(function(data) {
 	console.log(data);
 
-	if (!data.smeterengine.district["0"].$.name) {
-		var district = "Berlin";} 
-		else {
-		var district = data.smeterengine.district["0"].$.name;
-		} 
-	mountDiv.innerHTML = "<p>District: " + district + "</p><p>MaxGeneration: " + data.smeterengine.district["0"].$.maxUsage + "</p>";
-	//Max Generation: " + data.smeterengine.maxGeneration["0"] + "</p>";
+	var newest = data.slices[data.slices.length-1];
+	var HTMLString = "<p>Verbrauch am " + data.timeToShow + "</p>";
+
+		HTMLString += "<p>District: " + data.district + "</p><p>Zuführung: " + newest.feed + "</p><p>Erzeugung: " + newest.generation + "</p>";
+		HTMLString += "<p>Großkunden: " + newest["key-acount-usage"] + "</p>";
+	
+
+		mountDiv.innerHTML = HTMLString;
+
+	
+
 })
-.catch(function(err) { console.log(err)});
+.catch(function(err) { 
+	console.log(err)
+});
 //
 }
 
