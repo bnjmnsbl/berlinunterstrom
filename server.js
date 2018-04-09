@@ -12,11 +12,23 @@ app.use("/", express.static(process.cwd()));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
 
+
 var now = new Date();
+var yesterday = new Date(now)
+yesterday.setDate(now.getDate() - 1);
+var times = builder.buildFullDayArray(yesterday);
+
+
+
+/*
+console.log(beginDate);
 var oneDayAgo = new Date(now.getTime() -60000*60*1);
 var twoDaysAgo = new Date(now.getTime() -60000*60*24);
 var beginDate = builder.buildDateString(twoDaysAgo);
 var endDate = builder.buildDateString(oneDayAgo);
+console.log(beginDate);
+*/
+
 
 var xmls; 
 
@@ -36,7 +48,7 @@ app.post("/api", function (req, res) {
 
 app.get("/startApi", function(req, res) {
 
-xmls = builder.prepareOptions("DAY", "BERLIN", "BERLIN", beginDate, endDate);
+xmls = builder.prepareOptions("DAY", "BERLIN", "BERLIN", times[0], times[1]);
 
 var stromnetz = {};
 
@@ -62,8 +74,6 @@ axios.post('https://www.vattenfall.de/SmeterEngine/networkcontrol',
               stromnetz.maxGen = result.smeterengine.district["0"].$.maxGeneration;
               stromnetz.maxUse = result.smeterengine.district["0"].$.maxUsage;
               stromnetz.timeToShow = result.smeterengine.district["0"].period["0"].districtTimestampData[newest-1].$.value.split("T")[0];
-
-    
 
               res.json(stromnetz);
               
