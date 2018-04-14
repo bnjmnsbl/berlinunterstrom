@@ -18,18 +18,6 @@ var yesterday = new Date(now)
 yesterday.setDate(now.getDate() - 1);
 var times = builder.buildFullDayArray(yesterday);
 
-
-
-/*
-console.log(beginDate);
-var oneDayAgo = new Date(now.getTime() -60000*60*1);
-var twoDaysAgo = new Date(now.getTime() -60000*60*24);
-var beginDate = builder.buildDateString(twoDaysAgo);
-var endDate = builder.buildDateString(oneDayAgo);
-console.log(beginDate);
-*/
-
-
 var xmls; 
 
 
@@ -37,7 +25,7 @@ app.get("/", function(req,res) {
   res.sendFile(process.cwd() + "/index.html");
 });
 
-
+/*
 app.post("/api", function (req, res) {
   console.dir("posting")
   xmls = builder.prepareOptions(req.body.scale, "BERLIN", req.body.district, "2017-06-12 15:40:00", "2017-06-12 17:00:00");
@@ -45,8 +33,20 @@ app.post("/api", function (req, res) {
   res.redirect("/startApi");
 
 })
+*/
 
 app.get("/startApi", function(req, res) {
+
+var district = req.query.district; // NOT YET IMPLEMENTED; STILL CALLING BERLIN
+var dateQuery = new Date(req.query.fullDate);
+times = builder.buildFullDayArray(dateQuery);
+//var fullDate = req.query('fullDate');
+//times = builder.buildFullDayArray(fullDate);
+
+
+console.log("Getting " + district + " from query URL");
+console.log("For date: "  + times[0]);
+
 
 xmls = builder.prepareOptions("DAY", "BERLIN", "BERLIN", times[0], times[1]);
 

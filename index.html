@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/datepicker.css">
     <title>Parsing Stromnetz API</title>
-<style>
-#resultsText {margin: 20px; width: 400px; height: 400px; border: 1px solid;}
-.line {fill: none; stroke: steelblue; stroke-width: 2px;}
-</style>
+
 </head>
 <body>
 
 
+
 <form action="/api" method="post">
-<select id="scale" name="scale">
+  <input type="text" id="datepicker" value="Datum">
+<!--select id="scale" name="scale">
    <option value="" disabled selected="">Granularität</option>
    <option value="DAY">Daily</option>
    <option value="WEEK">Weekly</option>
    <option value="MONTH">Monthly</option>
    <option value="YEAR">Yearly</option>
- </select> 
+ </select--> 
 
-<select id="district" name="district">
+<select id="Bezirk" name="district">
    <option value="" disabled selected="">Bezirk</option>
    <option value="Pankow">Pankow</option>
    <option value="Lichtenberg">Lichtenberg</option>
@@ -34,7 +35,7 @@
    <option value="Charlottenburg-Wilmersdorf">Charlottenburg-Wilmersdorf</option>
    <option value="Reinickendorf">Reinickendorf</option>
    <option value="Spandau">Spandau</option>
-   <option value="BERLIN">Whole Berlin</option>
+   <option value="BERLIN">Ganz Berlin</option>
 
 
  </select> 
@@ -42,8 +43,8 @@
 </form>
 
 <div id="map"></div>
-<div id="resultsText"></div>
 
+<script src='lib/datepicker.min.js'></script>
 <script src='lib/d3.min.js'></script>
 <script type="text/javascript" src="viewController.js"></script>   
 
